@@ -1,0 +1,16 @@
+{
+  "name": "gh-budget-manager",
+  "version": "1.0.0",
+  "description": "GitHub Enterprise Budget Manager - SoftwareOne",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "helmet": "^8.0.0",
+    "express-rate-limit": "^7.4.0"
+  },
+  "private": true
+}
