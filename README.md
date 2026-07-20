@@ -12,6 +12,7 @@
 - Two functional areas:
   1. **Budgets** — list, filter, single-delete and bulk-delete budgets across four scope levels
   2. **AI Usage** — visualise Copilot AI-credit consumption vs. the enterprise's licensed allocation, and **bulk-create** per-user AI-credit budgets.
+  3. 
 
 ---
 
