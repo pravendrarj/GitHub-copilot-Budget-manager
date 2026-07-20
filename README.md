@@ -48,8 +48,9 @@
 3. On success, PAT is stored **server-side in memory** and a random 32-byte **session ID** is returned to the browser
 4. All subsequent requests use the session ID header — the **PAT never goes back to the client**
 5. Session ID is cached in the browser's `sessionStorage` so a **page reload survives** the connection (server-side session still expires after 30 minutes)
-6. Session **auto-expires after 30 minutes**; user can also manually disconnect
+6. Session **auto-expires after 30 minutes**; user can also manually disconnect.
 7. On page load, the frontend validates the stored session against a lightweight `GET /api/session` endpoint before showing the dashboard
+8. Make sure that you use the minimum role principle
 
 ---
 
