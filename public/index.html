@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Enterprise Budget & AI Credits Manager</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- ─── Header ──────────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="app-logo">GitHub Enterprise</span>
+      <span class="topbar-divider"></span>
+      <span class="topbar-title">Budget &amp; AI Credits Manager</span>
+    </div>
+    <div class="topbar-right" id="session-indicator" style="display:none;">
+      <span class="badge badge-green" id="enterprise-badge"></span>
+      <button class="btn btn-ghost" id="btn-disconnect">Disconnect</button>
+    </div>
+  </header>
+
+  <!-- ─── Main Content ────────────────────────────────────────── -->
+  <main class="container">
+
+    <!-- Connect Panel -->
+    <section id="panel-connect" class="card card-connect">
+      <div class="card-icon">
+        <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </div>
+      <h2>Connect to GitHub Enterprise</h2>
+      <p class="text-muted">Your PAT stays on this machine — it is never sent to any external service.</p>
+
+      <form id="form-connect" autocomplete="off">
+        <div class="form-group">
+          <label for="input-enterprise">Enterprise Slug</label>
+          <input id="input-enterprise" type="text" placeholder="my-enterprise" required />
+        </div>
+        <div class="form-group">
+          <label for="input-pat">Personal Access Token (classic)</label>
+          <input id="input-pat" type="password" placeholder="ghp_xxxxxxxxxxxx" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="btn-connect">
+          <span id="connect-text">Connect</span>
+          <span id="connect-spinner" class="spinner" style="display:none;"></span>
+        </button>
+        <p id="connect-error" class="error-text" style="display:none;"></p>
+      </form>
+    </section>
+
+    <!-- Budget Dashboard -->
+    <section id="panel-dashboard" style="display:none;">
+
+      <!-- Top Nav Tabs -->
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-panel="budgets">Budgets</button>
+        <button class="nav-tab" data-panel="ai-usage">AI Usage</button>
+      </div>
+
+      <!-- Budgets Panel -->
+      <div id="panel-budgets">
+
+      <!-- Scope Tabs -->
+      <div class="scope-tabs">
+        <button class="scope-tab active" data-scope="">All Budgets</button>
+        <button class="scope-tab" data-scope="multi_user_customer">Universal User</button>
+        <button class="scope-tab" data-scope="user">User</button>
+        <button class="scope-tab" data-scope="enterprise">Enterprise</button>
+        <button class="scope-tab" data-scope="cost_center">Cost Centre</button>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <span id="budget-count" class="text-muted">Loading budgets…</span>
+        </div>
+        <div class="toolbar-right">
+          <button class="btn btn-ghost" id="btn-refresh">↻ Refresh</button>
+          <button class="btn btn-danger" id="btn-delete-selected" disabled>Delete Selected</button>
+        </div>
+      </div>
+
+      <!-- Budget Table -->
+      <div class="table-wrap">
+        <table class="budget-table">
+          <thead>
+            <tr>
+              <th class="th-check"><input type="checkbox" id="check-all" /></th>
+              <th>Scope</th>
+              <th>Entity</th>
+              <th>Product / SKU</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Block Usage</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="budget-tbody"></tbody>
+        </table>
+      </div>
+
+      <p id="table-empty" class="text-muted text-center" style="display:none;">No budgets found for this scope.</p>
+      <p id="table-error" class="error-text text-center" style="display:none;"></p>
+
+      <!-- Bulk Budget Creation -->
+      <div class="bulk-create-section">
+        <div class="metrics-toolbar">
+          <h3 class="metrics-title">Bulk Create User Budgets</h3>
+        </div>
+        <p class="text-muted" style="margin-bottom:12px;">Create AI Credits budgets for multiple users at once. Select users from your enterprise.</p>
+        <form id="form-bulk-create" class="bulk-create-form">
+          <div class="bulk-create-row">
+            <div class="bulk-create-field">
+              <label>Select Enterprise Users</label>
+              <div class="user-picker">
+                <div class="user-picker-search">
+                  <input type="text" id="user-picker-search" class="input-field" placeholder="Search users…" autocomplete="off" />
+                  <button type="button" id="btn-load-users" class="btn btn-ghost btn-sm">Load Users</button>
+                </div>
+                <div class="user-picker-list" id="user-picker-list">
+                  <p class="text-muted text-center" style="padding:16px;">Click "Load Users" to fetch enterprise members</p>
+                </div>
+                <div class="user-picker-selected-bar">
+                  <span id="selected-count">0 selected</span>
+                  <button type="button" id="btn-select-all" class="btn btn-ghost btn-sm">Select All</button>
+                  <button type="button" id="btn-clear-selection" class="btn btn-ghost btn-sm">Clear</button>
+                </div>
+              </div>
+            </div>
+            <div class="bulk-create-options">
+              <div class="bulk-create-field">
+                <label for="bulk-amount">Budget per User (USD)</label>
+                <input type="number" id="bulk-amount" class="input-field" min="1" step="0.01" value="39" placeholder="39" />
+                <span class="text-muted" style="font-size:.75rem;">= <span id="bulk-credits-preview">3,900</span> AI credits each</span>
+              </div>
+              <div class="bulk-create-field">
+                <label for="bulk-block">Block on exceed?</label>
+                <select id="bulk-block" class="month-filter-select">
+                  <option value="true">Yes — block usage when exceeded</option>
+                  <option value="false">No — allow overage</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" id="btn-bulk-create" disabled>Create Budgets</button>
+            </div>
+          </div>
+          <p id="bulk-create-error" class="error-text" style="display:none;"></p>
+          <p id="bulk-create-success" class="success-text" style="display:none;"></p>
+        </form>
+      </div>
+
+      </div><!-- /panel-budgets -->
+
+      <!-- AI Usage Panel -->
+      <div id="panel-ai-usage" style="display:none;">
+
+        <!-- Month Filter -->
+        <div class="month-filter-bar">
+          <label for="month-filter" class="month-filter-label">Filter by month:</label>
+          <select id="month-filter" class="month-filter-select">
+            <option value="">All (28-day report)</option>
+          </select>
+        </div>
+
+        <!-- Credits Overview -->
+        <div class="metrics-toolbar">
+          <h3 class="metrics-title">AI Credits — Enterprise Overview</h3>
+          <button class="btn btn-ghost" id="btn-refresh-ai">↻ Refresh</button>
+        </div>
+
+        <div class="metrics-cards" id="ai-credits-cards">
+          <div class="metric-card">
+            <div class="metric-label">Budget (credits)</div>
+            <div class="metric-value" id="mc-allocated">—</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Consumed (credits)</div>
+            <div class="metric-value" id="mc-consumed">—</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Remaining</div>
+            <div class="metric-value" id="mc-remaining">—</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Utilization</div>
+            <div class="metric-value" id="mc-utilization">—</div>
+          </div>
+        </div>
+
+        <!-- Usage Progress Bar -->
+        <div class="usage-bar-wrap">
+          <div class="usage-bar">
+            <div class="usage-bar-fill" id="usage-bar-fill" style="width:0%"></div>
+          </div>
+          <div class="usage-bar-labels">
+            <span id="usage-bar-used">0%</span>
+            <span id="usage-bar-total"></span>
+          </div>
+        </div>
+
+        <!-- Top Users Table -->
+        <h4 class="section-heading">Usage by User <span class="text-muted">(top 7 highlighted)</span></h4>
+        <p id="ai-users-error" class="error-text" style="display:none;"></p>
+        <div class="table-wrap">
+          <table class="budget-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>AI Credits Used</th>
+                <th>Days Active</th>
+                <th>% of Top</th>
+                <th>Bar</th>
+              </tr>
+            </thead>
+            <tbody id="ai-users-tbody"></tbody>
+          </table>
+        </div>
+        <p id="ai-users-empty" class="text-muted text-center" style="display:none;">No user consumption data found. Ensure an AI Credits budget exists with scope "Universal User".</p>
+
+        <!-- Copilot by IDE -->
+        <div class="metrics-toolbar" style="margin-top:2rem;">
+          <h3 class="metrics-title">Copilot Usage by IDE <span class="text-muted">(28-day report)</span></h3>
+          <button class="btn btn-ghost" id="btn-refresh-copilot">↻ Refresh</button>
+        </div>
+
+        <div class="metrics-cards" id="copilot-summary-cards">
+          <div class="metric-card">
+            <div class="metric-label">Total Tokens</div>
+            <div class="metric-value" id="mc-tokens">—</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Code Generations</div>
+            <div class="metric-value" id="mc-suggestions">—</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Code Accepts</div>
+            <div class="metric-value" id="mc-acceptances">—</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">Accept Rate</div>
+            <div class="metric-value" id="mc-accept-rate">—</div>
+          </div>
+        </div>
+
+        <p id="copilot-error" class="error-text" style="display:none;"></p>
+        <div class="table-wrap">
+          <table class="budget-table">
+            <thead>
+              <tr>
+                <th>IDE / Editor</th>
+                <th>LOC Added</th>
+                <th>Code Gen</th>
+                <th>Code Accept</th>
+                <th>LOC Suggested</th>
+                <th>Share</th>
+              </tr>
+            </thead>
+            <tbody id="copilot-ide-tbody"></tbody>
+          </table>
+        </div>
+        <p id="copilot-ide-empty" class="text-muted text-center" style="display:none;">No Copilot metrics data available. Your PAT may need <code>manage_billing:copilot</code> or <code>read:enterprise</code> scope.</p>
+
+        <p id="copilot-report-period" class="text-muted text-center" style="margin-top:0.5rem;"></p>
+
+      </div><!-- /panel-ai-usage -->
+
+    </section>
+  </main>
+
+  <!-- ─── Delete Confirmation Modal ──────────────────────────── -->
+  <div id="modal-overlay" class="modal-overlay" style="display:none;">
+    <div class="modal">
+      <h3>⚠️ Confirm Deletion</h3>
+      <p id="modal-message">Are you sure you want to delete the selected budget(s)? This action cannot be undone.</p>
+      <div id="modal-budget-list" class="modal-budget-list"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+        <button class="btn btn-danger" id="modal-confirm">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── Toast container ────────────────────────────────────── -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ─── Footer ──────────────────────────────────────────────── -->
+  <footer class="footer">
+    <span>Built for GitHub Enterprise billing management.</span>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
