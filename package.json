@@ -1,7 +1,7 @@
 {
   "name": "gh-budget-manager",
   "version": "1.0.0",
-  "description": "GitHub Enterprise Budget Manager - SoftwareOne",
+  "description": "GitHub Enterprise Budget & AI Credits Manager",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

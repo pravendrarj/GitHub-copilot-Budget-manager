@@ -80,7 +80,7 @@ function ghHeaders(pat) {
     'Accept': 'application/vnd.github+json',
     'Authorization': `Bearer ${pat}`,
     'X-GitHub-Api-Version': '2026-03-10',
-    'User-Agent': 'SWO-GH-Budget-Manager/1.0',
+    'User-Agent': 'GH-Budget-Manager/1.0',
   };
 }
 
@@ -789,7 +789,7 @@ app.get('*', (_req, res) => {
 // ---------------------------------------------------------------------------
 app.listen(PORT, '127.0.0.1', () => {
   console.log(`\n  ╔══════════════════════════════════════════════════════════╗`);
-  console.log(`  ║   SoftwareOne — GitHub Budget Manager                   ║`);
+  console.log(`  ║   GitHub Enterprise Budget Manager                      ║`);
   console.log(`  ║   Running at  http://127.0.0.1:${PORT}                    ║`);
   console.log(`  ║   Press Ctrl+C to stop                                  ║`);
   console.log(`  ╚══════════════════════════════════════════════════════════╝\n`);

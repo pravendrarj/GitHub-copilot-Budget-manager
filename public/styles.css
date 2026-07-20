@@ -1,14 +1,14 @@
 /* ═══════════════════════════════════════════════════════════
-   SoftwareOne — GitHub Budget Manager
-   Theme: GitHub-inspired dark + SWO accent (#E8490F)
+   GitHub Enterprise Budget & AI Credits Manager
+   Theme: GitHub-inspired dark + accent (#E8490F)
    ═══════════════════════════════════════════════════════════ */
 
 /* ── Reset & Base ────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --swo-red:       #E8490F;
-  --swo-red-hover: #d13e0a;
+  --accent:        #E8490F;
+  --accent-hover:  #d13e0a;
   --bg-page:       #0d1117;
   --bg-card:       #161b22;
   --bg-input:      #0d1117;
@@ -49,7 +49,7 @@ body {
   z-index: 100;
 }
 .topbar-left { display: flex; align-items: center; gap: 12px; }
-.swo-logo { height: 24px; width: auto; }
+.app-logo { font-weight: 700; font-size: 1.05rem; color: var(--text-primary); letter-spacing: .01em; }
 .topbar-divider { width: 1px; height: 24px; background: var(--border); }
 .topbar-title { font-weight: 600; font-size: 1rem; color: var(--text-secondary); }
 .topbar-right { display: flex; align-items: center; gap: 12px; }
@@ -98,7 +98,7 @@ body {
   color: var(--text-primary);
   font-size: .95rem;
 }
-.form-group input:focus { outline: none; border-color: var(--swo-red); box-shadow: 0 0 0 3px rgba(232,73,15,.25); }
+.form-group input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(232,73,15,.25); }
 
 /* ── Buttons ─────────────────────────────────────────────── */
 .btn {
@@ -117,8 +117,8 @@ body {
   color: var(--text-primary);
 }
 .btn:disabled { opacity: .4; cursor: not-allowed; }
-.btn-primary { background: var(--swo-red); border-color: var(--swo-red); color: #fff; }
-.btn-primary:hover:not(:disabled) { background: var(--swo-red-hover); }
+.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
 .btn-danger { background: var(--red); border-color: var(--red); color: #fff; }
 .btn-danger:hover:not(:disabled) { background: #d73a49; }
 .btn-ghost { background: transparent; border-color: var(--border); color: var(--text-secondary); }
@@ -147,7 +147,7 @@ body {
   transition: .15s;
 }
 .scope-tab:hover { color: var(--text-primary); }
-.scope-tab.active { color: var(--swo-red); border-bottom-color: var(--swo-red); }
+.scope-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ── Toolbar ─────────────────────────────────────────────── */
 .toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; }
@@ -261,7 +261,7 @@ body {
   transition: .15s;
 }
 .nav-tab:hover { color: var(--text-primary); background: var(--bg-hover); }
-.nav-tab.active { color: var(--swo-red); border-bottom-color: var(--swo-red); }
+.nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* ── Month Filter ────────────────────────────────────────── */
 .month-filter-bar {
@@ -291,7 +291,7 @@ body {
 }
 .month-filter-select:focus {
   outline: none;
-  border-color: var(--swo-red);
+  border-color: var(--accent);
 }
 
 /* ── Metrics Cards ───────────────────────────────────────── */
@@ -329,7 +329,7 @@ body {
 }
 .usage-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--green), #f0883e, var(--swo-red));
+  background: linear-gradient(90deg, var(--green), #f0883e, var(--accent));
   border-radius: 6px;
   transition: width .4s ease;
 }
@@ -408,7 +408,7 @@ body {
 }
 .bulk-textarea:focus {
   outline: none;
-  border-color: var(--swo-red);
+  border-color: var(--accent);
 }
 .bulk-create-options {
   display: flex;
@@ -416,7 +416,7 @@ body {
   gap: 4px;
 }
 .btn-primary {
-  background: var(--swo-red);
+  background: var(--accent);
   color: #fff;
   border: none;
   padding: 10px 24px;
@@ -427,7 +427,7 @@ body {
   margin-top: 8px;
   transition: background .15s;
 }
-.btn-primary:hover { background: var(--swo-red-hover); }
+.btn-primary:hover { background: var(--accent-hover); }
 .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
 .success-text { color: var(--green); font-size: .85rem; margin-top: 8px; }
 .input-field {
@@ -441,7 +441,7 @@ body {
 }
 .input-field:focus {
   outline: none;
-  border-color: var(--swo-red);
+  border-color: var(--accent);
 }
 
 /* ── User Picker (multi-select) ──────────────────────────── */

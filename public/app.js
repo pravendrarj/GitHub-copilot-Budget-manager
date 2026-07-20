@@ -1,12 +1,12 @@
 /* ═══════════════════════════════════════════════════════════
-   SoftwareOne — GitHub Budget Manager  •  Frontend Logic
-   ═══════════════════════════════════════════════════════════ */
+   GitHub Enterprise Budget Manager  •  Frontend Logic
+   ════════════════════════════════════════════════════════════ */
 
 (function () {
   'use strict';
 
-  // ── State ─────────────────────────────────────────────────
-  const STORAGE_KEY = 'sw1_gh_session';
+  // ── State ────────────────────────────────────
+  const STORAGE_KEY = 'ghbm_session';
   let sessionId = null;
   let enterpriseName = '';
   let currentScope = '';

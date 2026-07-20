@@ -1,6 +1,6 @@
 # Copilot Instructions — GitHub Enterprise Budget & AI Credits Manager
 
-Internal SoftwareOne tool. Local-only Node.js/Express app that proxies the GitHub Enterprise billing + Copilot APIs and renders a small vanilla-JS SPA. Read this before making any change.
+Local-only Node.js/Express app that proxies the GitHub Enterprise billing + Copilot APIs and renders a small vanilla-JS SPA. Read this before making any change.
 
 ---
 
@@ -21,7 +21,7 @@ Internal SoftwareOne tool. Local-only Node.js/Express app that proxies the GitHu
 | `server.js` | Express app, in-memory session store, GitHub proxy endpoints, validation, rate limiting |
 | `public/index.html` | SPA shell (Budgets + AI Usage tabs) |
 | `public/app.js` | Frontend logic, `api()` helper, session restore, user picker, bulk-create form |
-| `public/styles.css` | Dark GitHub/SWO theme |
+| `public/styles.css` | Dark GitHub-inspired theme |
 | `README.md` | Authoritative spec — keep in sync when behaviour changes |
 | `package.json` | Only 3 runtime deps: `express`, `helmet`, `express-rate-limit` |
 
@@ -71,7 +71,7 @@ const SESSION_TTL_MS = 30 * 60 * 1000;
 
 - **Single IIFE.** No module system, no bundler. Keep everything in the existing closure.
 - **`api(method, path, body)` helper** is the only way to talk to the backend. It attaches `X-Session-Id` automatically. Do not `fetch()` the API directly from new UI code.
-- **Session storage key:** `sw1_gh_session` (holds only the session ID + enterprise slug). Do not add token-like data.
+- **Session storage key:** `ghbm_session` (holds only the session ID + enterprise slug). Do not add token-like data.
 - **Restoration flow:** on load, `restoreSession()` calls `GET /api/session`; only show the dashboard on success. Do not trust `sessionStorage` alone.
 - **DOM building:** prefer `document.createElement` + `.textContent`. If a template literal is unavoidable, run every interpolated value through the escape helper.
 - **Avatars:** use the raw `avatar_url` returned by GitHub (do not append `&s=...` — it invalidates the signature for some responses). Always set `onerror="this.style.visibility='hidden'"`.

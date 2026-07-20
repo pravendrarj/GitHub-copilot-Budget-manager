@@ -1,13 +1,13 @@
-# SoftwareOne — GitHub Enterprise Budget & AI Credits Manager
+# GitHub Enterprise Budget & AI Credits Manager
 
-> **Internal Tooling** | Version 2.0 | © 2026 SoftwareOne
+> **Open-Source Tooling** | Version 2.0
 
 ---
 
 ## What Is This App
 
 - A **locally-hosted web tool** for managing GitHub Enterprise billing budgets and monitoring Copilot AI credits via the GitHub REST API
-- Built by SoftwareOne (Pravendra) as internal tooling — runs at `http://127.0.0.1:3000`
+- Runs entirely on your machine at `http://127.0.0.1:3000` — no external services
 - Two functional areas:
   1. **Budgets** — list, filter, single-delete and bulk-delete budgets across four scope levels
   2. **AI Usage** — visualise Copilot AI-credit consumption vs. the enterprise's licensed allocation, and **bulk-create** per-user AI-credit budgets
@@ -108,7 +108,7 @@ The Budget (credits) card tooltip shows the plan breakdown (e.g. *"12 Enterprise
 │   (http://127.0.0.1:3000)                           │
 │                                                     │
 │   ┌─────────────────────────────────────────────┐   │
-│   │       SWO-themed Frontend SPA                │   │
+│   │       Themed Frontend SPA                     │   │
 │   │   index.html  +  styles.css  +  app.js       │   │
 │   │                                              │   │
 │   │   Tabs:  Budgets   •   AI Usage              │   │
@@ -223,7 +223,7 @@ The scopes required depend on which features you use:
 
 1. Go to **GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)**
 2. Click **Generate new token (classic)**
-3. Set a descriptive **Note** (e.g., `SWO Budget Manager`)
+3. Set a descriptive **Note** (e.g., `GH Budget Manager`)
 4. Set **Expiration** to the shortest acceptable period (e.g., 7 days)
 5. Under **Select scopes**, check only the ones you need (see table above)
 6. Click **Generate token**
@@ -355,7 +355,7 @@ freecharge/
 ├── package.json           # Dependencies
 ├── public/
 │   ├── index.html         # Single-page app shell
-│   ├── styles.css         # GitHub/SWO dark theme
+│   ├── styles.css         # GitHub-inspired dark theme
 │   └── app.js             # Frontend logic (tabs, picker, api helper)
 └── README.md              # This document
 ```
@@ -423,7 +423,7 @@ freecharge/
 
 ```
 THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED. IN NO EVENT SHALL THE DEVELOPER (PRAVENDRA) OR SOFTWAREONE BE LIABLE
+IMPLIED. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
 FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM THE USE OF THIS TOOL.
 
 THE USER ACCEPTS ALL RISK ASSOCIATED WITH:
@@ -465,12 +465,12 @@ ACCEPTED THE RISKS OUTLINED ABOVE.
 
 ## License
 
-Internal SoftwareOne tooling. Not for external distribution.
+Released under the MIT License — see [LICENSE](LICENSE).
 
 ---
 
 <p align="center">
-  <strong>Software</strong><span style="color:#E8490F"><strong>One</strong></span><br/>
+  <strong>GitHub Enterprise Budget & AI Credits Manager</strong><br/>
   <em>Simplifying GitHub Enterprise budget & AI credit management.</em><br/>
   <em>Developed by Pravendra</em>
 </p>
