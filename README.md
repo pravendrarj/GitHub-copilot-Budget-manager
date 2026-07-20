@@ -8,7 +8,7 @@
 
 - A **locally-hosted web tool** for managing GitHub Enterprise billing budgets and monitoring Copilot AI credits via the GitHub REST API
 - This will help you manage the ULB, UULB, and other budgets on a single screen.
-- Runs entirely on your machine at `http://127.0.0.1:3000` — no external services
+- Runs entirely on your machine at `http://127.0.0.1:3000` — no external services. Please feel free to update the port no.
 - Two functional areas:
   1. **Budgets** — list, filter, single-delete and bulk-delete budgets across four scope levels
   2. **AI Usage** — visualise Copilot AI-credit consumption vs. the enterprise's licensed allocation, and **bulk-create** per-user AI-credit budgets
