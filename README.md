@@ -1,4 +1,4 @@
-# GitHub Enterprise Budget & AI Credits Manager
+# GitHub Enterprise Budget & AI Credits Manager.
 
 > **Open-Source Tooling** | Version 2.0
 
